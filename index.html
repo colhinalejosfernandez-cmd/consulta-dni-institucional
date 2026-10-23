@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Acceso al sistema de consulta de DNI.">
+  <title>Iniciar sesión | Consulta de DNI</title>
+  <link rel="stylesheet" href="./public/css/estilos.css">
+  <script src="./public/js/configuracion-pages.js" defer></script>
+  <script src="./public/js/acceso-pages.js" defer></script>
+</head>
+<body class="pagina-acceso">
+  <main class="acceso-contenedor">
+    <section class="acceso-presentacion" aria-label="Presentación del sistema">
+      <div class="marca marca-clara">
+        <span class="marca-simbolo" aria-hidden="true">ID</span>
+        <span>Consulta de DNI</span>
+      </div>
+      <div class="presentacion-texto">
+        <span class="etiqueta-etapa">USO INTERNO</span>
+        <h1>La información que necesitas, en un solo lugar.</h1>
+        <p>Consulta datos de identidad de manera organizada, mediante el servicio autorizado de RENIEC – PIDE.</p>
+        <div class="presentacion-puntos">
+          <span><span class="punto-claro"></span>Acceso para personal autorizado</span>
+          <span><span class="punto-claro"></span>Consultas individuales por DNI</span>
+        </div>
+      </div>
+      <p class="presentacion-pie">La información consultada es de uso institucional y confidencial.</p>
+    </section>
+
+    <section class="acceso-panel" aria-labelledby="tituloAcceso">
+      <div class="acceso-formulario-contenedor">
+        <span class="icono-acceso" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none"><rect x="5" y="10" width="14" height="11" rx="2" stroke="currentColor" stroke-width="1.7"/><path d="M8 10V7a4 4 0 0 1 8 0v3" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></svg>
+        </span>
+        <span class="eyebrow">BIENVENIDO</span>
+        <h2 id="tituloAcceso">Iniciar sesión</h2>
+        <p class="texto-ayuda">Ingresa tus datos para acceder al sistema.</p>
+
+        <form id="formularioAcceso" autocomplete="on" novalidate>
+          <div class="grupo-campo">
+            <label for="usuario">Usuario</label>
+            <input type="text" id="usuario" name="username" autocomplete="username" placeholder="Escribe tu usuario" maxlength="60" required autofocus>
+          </div>
+          <div class="grupo-campo">
+            <label for="clave">Contraseña</label>
+            <div class="campo-con-accion">
+              <input type="password" id="clave" name="password" autocomplete="current-password" placeholder="Escribe tu contraseña" maxlength="200" required>
+              <button type="button" id="mostrarClave" class="accion-campo" aria-label="Mostrar contraseña" aria-pressed="false">Mostrar</button>
+            </div>
+          </div>
+          <p id="mensajeAcceso" class="mensaje" role="alert" aria-live="polite" hidden></p>
+          <button id="botonEntrar" class="boton boton-primario boton-completo" type="submit">Iniciar sesión <span aria-hidden="true">→</span></button>
+        </form>
+        <p class="nota-panel">¿No tienes acceso? Comunícate con el responsable del sistema.</p>
+      </div>
+    </section>
+  </main>
+</body>
+</html>
