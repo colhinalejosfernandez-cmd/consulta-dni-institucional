@@ -1,0 +1,25 @@
+{
+  "name": "consulta-dni-institucional",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Sistema interno de consulta de DNI mediante RENIEC - PIDE.",
+  "main": "servidor/app.js",
+  "scripts": {
+    "iniciar": "node servidor/app.js",
+    "desarrollar": "node --watch servidor/app.js",
+    "crear-clave": "node herramientas/crear-clave.js",
+    "revisar": "node --check servidor/app.js && node --check servidor/acceso.js && node --check servidor/consultas.js && node --check servidor/reniec.js && node --check public/js/login.js && node --check public/js/consulta.js && node --check public/js/foto.js"
+  },
+  "engines": {
+    "node": ">=20.11"
+  },
+  "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "dotenv": "^16.4.7",
+    "express": "^4.21.2",
+    "express-rate-limit": "^7.5.0",
+    "express-session": "^1.19.0",
+    "helmet": "^8.1.0",
+    "memorystore": "^1.6.8"
+  }
+}

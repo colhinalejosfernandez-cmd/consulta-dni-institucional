@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Sistema de Consulta DNI - Acceso Institucional</title>
+    <link rel="stylesheet" href="../public/css/estilos.css">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🏛️</text></svg>">
+</head>
+<body>
+    <div class="login-container">
+        <div class="login-card">
+            <div class="login-header">
+                <div class="institution-logo" aria-hidden="true">
+                    <svg width="64" height="64" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Escudo institucional">
+                        <circle cx="32" cy="32" r="30" fill="#1B3A5C"/>
+                        <path d="M32 12L50 24V40L32 52L14 40V24L32 12Z" stroke="white" stroke-width="3" fill="none"/>
+                        <circle cx="32" cy="32" r="8" fill="white"/>
+                    </svg>
+                </div>
+                <h1 class="institution-title">Sistema de Consulta DNI</h1>
+                <p class="institution-subtitle">Acceso Institucional - RENIEC / PIDE</p>
+            </div>
+
+            <form id="loginForm" class="login-form" novalidate>
+                <div class="form-group">
+                    <label for="usuario" class="form-label">
+                        <span class="label-icon" aria-hidden="true">👤</span>
+                        Usuario (DNI)
+                    </label>
+                    <input
+                        type="text"
+                        id="usuario"
+                        name="usuario"
+                        class="form-input"
+                        placeholder="Ingrese su DNI institucional"
+                        maxlength="8"
+                        pattern="[0-9]{8}"
+                        required
+                        autocomplete="username"
+                        aria-describedby="usuario-help"
+                    >
+                    <span id="usuario-help" class="form-help">8 dígitos numéricos</span>
+                    <div class="form-error" id="usuario-error" aria-live="polite"></div>
+                </div>
+
+                <div class="form-group">
+                    <label for="contrasena" class="form-label">
+                        <span class="label-icon" aria-hidden="true">🔒</span>
+                        Contraseña
+                    </label>
+                    <div class="password-wrapper">
+                        <input
+                            type="password"
+                            id="contrasena"
+                            name="contrasena"
+                            class="form-input"
+                            placeholder="Ingrese su contraseña"
+                            required
+                            autocomplete="current-password"
+                            aria-describedby="contrasena-help"
+                        >
+                        <button type="button" class="toggle-password" id="togglePassword" aria-label="Mostrar/ocultar contraseña" aria-pressed="false">
+                            <span class="eye-icon" aria-hidden="true">👁️</span>
+                        </button>
+                    </div>
+                    <span id="contrasena-help" class="form-help">Credencial institucional</span>
+                    <div class="form-error" id="contrasena-error" aria-live="polite"></div>
+                </div>
+
+                <div class="form-group">
+                    <button type="submit" class="btn btn-primary btn-block" id="btnLogin">
+                        <span class="btn-text">Iniciar Sesión</span>
+                        <span class="btn-loader" aria-hidden="true"></span>
+                    </button>
+                </div>
+
+                <div class="form-message" id="formMessage" role="alert" aria-live="assertive"></div>
+            </form>
+
+            <div class="login-footer">
+                <p class="security-notice">
+                    <span aria-hidden="true">🛡️</span>
+                    Sistema protegido - Acceso autorizado únicamente
+                </p>
+                <p class="version-info">v1.0.0 | Consulta DNI Institucional</p>
+            </div>
+        </div>
+
+        <div class="background-pattern" aria-hidden="true"></div>
+    </div>
+
+    <script src="../public/js/login.js"></script>
+</body>
+</html>

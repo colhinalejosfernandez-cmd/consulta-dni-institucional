@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Consulta DNI - Sistema Institucional</title>
+    <link rel="stylesheet" href="../public/css/estilos.css">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🏛️</text></svg>">
+</head>
+<body>
+    <header class="main-header" role="banner">
+        <div class="header-content">
+            <div class="header-brand">
+                <svg class="brand-logo" width="40" height="40" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                    <circle cx="32" cy="32" r="30" fill="#1B3A5C"/>
+                    <path d="M32 12L50 24V40L32 52L14 40V24L32 12Z" stroke="white" stroke-width="3" fill="none"/>
+                    <circle cx="32" cy="32" r="8" fill="white"/>
+                </svg>
+                <div class="brand-text">
+                    <h1>Sistema de Consulta DNI</h1>
+                    <span class="brand-subtitle">RENIEC / PIDE - Consulta Institucional</span>
+                </div>
+            </div>
+            <div class="header-actions">
+                <div class="user-info" id="userInfo" aria-live="polite">
+                    <span class="user-avatar" aria-hidden="true">👤</span>
+                    <span class="user-name" id="userName">Cargando...</span>
+                </div>
+                <button type="button" class="btn btn-secondary btn-logout" id="btnLogout" aria-label="Cerrar sesión">
+                    <span class="btn-icon" aria-hidden="true">🚪</span>
+                    <span class="btn-text">Cerrar Sesión</span>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <main class="main-content" role="main">
+        <div class="container">
+            <section class="search-section" aria-labelledby="searchTitle">
+                <div class="section-header">
+                    <h2 id="searchTitle" class="section-title">
+                        <span class="title-icon" aria-hidden="true">🔍</span>
+                        Consulta de Ciudadano
+                    </h2>
+                </div>
+
+                <form id="searchForm" class="search-form" novalidate>
+                    <div class="search-input-group">
+                        <label for="dniInput" class="visually-hidden">Número de DNI a consultar</label>
+                        <input
+                            type="text"
+                            id="dniInput"
+                            name="dni"
+                            class="search-input"
+                            placeholder="Ingrese DNI de 8 dígitos"
+                            maxlength="8"
+                            pattern="[0-9]{8}"
+                            required
+                            autocomplete="off"
+                            aria-describedby="dniHelp"
+                            inputmode="numeric"
+                        >
+                        <span id="dniHelp" class="form-help">8 dígitos numéricos</span>
+                        <div class="form-error" id="dniError" aria-live="polite"></div>
+                    </div>
+                    <div class="search-actions">
+                        <button type="submit" class="btn btn-primary" id="btnSearch">
+                            <span class="btn-text">Consultar</span>
+                            <span class="btn-loader" aria-hidden="true"></span>
+                        </button>
+                        <button type="button" class="btn btn-outline" id="btnClear" aria-label="Limpiar formulario">
+                            <span class="btn-icon" aria-hidden="true">🗑️</span>
+                            <span class="btn-text">Limpiar</span>
+                        </button>
+                    </div>
+                </form>
+
+                <div class="search-message" id="searchMessage" role="alert" aria-live="assertive"></div>
+            </section>
+
+            <section class="results-section" id="resultsSection" aria-labelledby="resultsTitle" hidden>
+                <div class="section-header">
+                    <h2 id="resultsTitle" class="section-title">
+                        <span class="title-icon" aria-hidden="true">📋</span>
+                        Ficha de Resultados
+                    </h2>
+                    <div class="section-actions">
+                        <button type="button" class="btn btn-outline btn-print" id="btnPrint" aria-label="Imprimir ficha">
+                            <span class="btn-icon" aria-hidden="true">🖨️</span>
+                            <span class="btn-text">Imprimir</span>
+                        </button>
+                        <button type="button" class="btn btn-outline btn-new" id="btnNewSearch" aria-label="Nueva consulta">
+                            <span class="btn-icon" aria-hidden="true">➕</span>
+                            <span class="btn-text">Nueva Consulta</span>
+                        </button>
+                    </div>
+                </div>
+
+                <div class="results-grid">
+                    <article class="person-card" aria-label="Datos personales">
+                        <div class="card-header">
+                            <h3 class="card-title">
+                                <span class="title-icon" aria-hidden="true">👤</span>
+                                Datos Personales
+                            </h3>
+                        </div>
+                        <div class="card-body">
+                            <dl class="data-list">
+                                <div class="data-row">
+                                    <dt class="data-label">DNI</dt>
+                                    <dd class="data-value data-dni" id="resultDni">-</dd>
+                                </div>
+                                <div class="data-row">
+                                    <dt class="data-label">Nombres</dt>
+                                    <dd class="data-value" id="resultNombres">-</dd>
+                                </div>
+                                <div class="data-row">
+                                    <dt class="data-label">Primer Apellido</dt>
+                                    <dd class="data-value" id="resultApePaterno">-</dd>
+                                </div>
+                                <div class="data-row">
+                                    <dt class="data-label">Segundo Apellido</dt>
+                                    <dd class="data-value" id="resultApeMaterno">-</dd>
+                                </div>
+                                <div class="data-row">
+                                    <dt class="data-label">Estado Civil</dt>
+                                    <dd class="data-value" id="resultEstadoCivil">-</dd>
+                                </div>
+                                <div class="data-row">
+                                    <dt class="data-label">Dirección</dt>
+                                    <dd class="data-value" id="resultDireccion">-</dd>
+                                </div>
+                                <div class="data-row">
+                                    <dt class="data-label">UBIGEO</dt>
+                                    <dd class="data-value" id="resultUbigeo">-</dd>
+                                </div>
+                                <div class="data-row">
+                                    <dt class="data-label">Restricción</dt>
+                                    <dd class="data-value data-restriction" id="resultRestriccion">-</dd>
+                                </div>
+                            </dl>
+                        </div>
+                    </article>
+
+                    <aside class="photo-card" aria-label="Fotografía del ciudadano">
+                        <div class="card-header">
+                            <h3 class="card-title">
+                                <span class="title-icon" aria-hidden="true">📷</span>
+                                Fotografía
+                            </h3>
+                        </div>
+                        <div class="card-body">
+                            <div class="photo-container">
+                                <img
+                                    id="photoImage"
+                                    class="photo-image"
+                                    src=""
+                                    alt="Fotografía del ciudadano consultado"
+                                    hidden
+                                >
+                                <div class="photo-placeholder" id="photoPlaceholder" aria-hidden="true">
+                                    <span class="placeholder-icon">📷</span>
+                                    <p class="placeholder-text">Sin fotografía disponible</p>
+                                </div>
+                                <div class="photo-loading" id="photoLoading" hidden aria-hidden="true">
+                                    <div class="spinner"></div>
+                                    <p>Cargando fotografía...</p>
+                                </div>
+                                <div class="photo-error" id="photoError" hidden aria-live="polite">
+                                    <span class="error-icon">⚠️</span>
+                                    <p>Error al cargar la imagen</p>
+                                </div>
+                            </div>
+                            <div class="photo-meta" id="photoMeta" hidden>
+                                <small class="meta-text" id="photoFormat">Formato: JPG</small>
+                                <small class="meta-text" id="photoSize">Tamaño: -</small>
+                            </div>
+                        </div>
+                    </aside>
+                </div>
+            </section>
+
+            <section class="history-section" id="historySection" aria-labelledby="historyTitle">
+                <h2 id="historyTitle" class="section-title">
+                    <span class="title-icon" aria-hidden="true">📜</span>
+                    Historial de Consultas
+                </h2>
+                <div class="history-list" id="historyList" role="list" aria-label="Últimas consultas realizadas">
+                    <p class="history-empty" id="historyEmpty">No hay consultas recientes</p>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <footer class="main-footer" role="contentinfo">
+        <div class="footer-content">
+            <p class="footer-copyright">© 2026 Sistema de Consulta DNI Institucional</p>
+            <p class="footer-disclaimer">Uso autorizado - Datos protegidos por Ley de Protección de Datos Personales</p>
+        </div>
+    </footer>
+
+    <div class="toast-container" id="toastContainer" aria-live="polite" aria-label="Notificaciones"></div>
+
+    <script src="../public/js/foto.js"></script>
+    <script src="../public/js/consulta.js"></script>
+</body>
+</html>
