@@ -7,13 +7,17 @@ const rutas = express.Router();
 // Comparación alternativa para que los usuarios desconocidos no sean mucho más rápidos.
 const hashAlternativo = bcrypt.hashSync(crypto.randomBytes(24).toString('hex'), 12);
 
-const limitarIntentos = rateLimit({
-  windowMs: 15 * 60 * 1000,
-  limit: 6,
-  standardHeaders: 'draft-7',
-  legacyHeaders: false,
-  message: { mensaje: 'Demasiados intentos. Vuelve a probar en 15 minutos.' }
-});
+// En desarrollo local se permiten nuevos intentos sin un bloqueo de 15 minutos.
+// En producción se mantiene la protección para evitar intentos automatizados.
+const limitarIntentos = process.env.NODE_ENV === 'production'
+  ? rateLimit({
+      windowMs: 15 * 60 * 1000,
+      limit: 6,
+      standardHeaders: 'draft-7',
+      legacyHeaders: false,
+      message: { mensaje: 'Demasiados intentos. Vuelve a probar en 15 minutos.' }
+    })
+  : (req, res, siguiente) => siguiente();
 
 function exigirSesion(req, res, siguiente) {
   if (req.session?.usuario) return siguiente();
